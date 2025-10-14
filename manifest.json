@@ -40,14 +40,14 @@
       "sizes": "720x1280",
       "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "Live Dashboard on Mobile"
+      "label": "PAGE 1"
     },
     {
       "src": "screenshots/screenshot-2.jpg",
-      "sizes": "1280x720",
+      "sizes": "720x1280",
       "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "Election Results on Desktop"
+      "form_factor": "narrow",
+      "label": "PAGE 2"
     }
   ],
   "shortcuts": [
