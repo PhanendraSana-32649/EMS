@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutBtn = document.getElementById('logoutBtn');
 
     let otpTimerInterval;
-    const OTP_VALIDITY_SECONDS = 300; // 5 minutes
+    const OTP_VALIDITY_SECONDS = 60; // 1 minute
 
     // --- Mock Data ---
     const MOCK_COMPLAINTS = [
