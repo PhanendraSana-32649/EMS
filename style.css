@@ -56,16 +56,17 @@ body {
 .logo {
   width: 55px;
   height: 55px;
-  background: linear-gradient(135deg, var(--saffron), var(--white), var(--green));
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 1.2rem;
-  color: var(--navy);
   box-shadow: 0 4px 15px rgba(255,153,51,0.5);
   animation: glow 3s ease-in-out infinite;
+  /* Add this to clip the image to the rounded corners */
+  overflow: hidden; 
+  /* We remove the text-specific and background styles */
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This makes the image fill the entire space without distortion */
 }
 
 @keyframes glow {
