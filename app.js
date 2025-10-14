@@ -27,9 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const verifyForm = document.getElementById('verifyForm');
     const verificationResult = document.getElementById('verificationResult');
     const logoutBtn = document.getElementById('logoutBtn');
+    // New selectors for dynamic stats
+    const voterTurnoutEl = document.getElementById('voterTurnout');
+    const boothsReportedEl = document.getElementById('boothsReported');
+    const complaintsFiledEl = document.getElementById('complaintsFiled');
+    // New selectors for PWA Install Prompt
+    const installPromptEl = document.getElementById('installPrompt');
+    const installBtn = document.getElementById('installBtn');
+    const dismissInstallBtn = document.getElementById('dismissInstallBtn');
+
 
     let otpTimerInterval;
     const OTP_VALIDITY_SECONDS = 60; // 1 minute
+    let generatedOtp = null; // To store the random OTP
+    let deferredInstallPrompt = null; // To store the install event
 
     // --- Mock Data ---
     const MOCK_COMPLAINTS = [
@@ -67,6 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         button.innerHTML = originalText;
     };
     
+    // Generates dynamic stats for the dashboard
+    const updateDashboardStats = () => {
+        const turnout = ((Math.random() * 45) + 40).toFixed(1);
+        voterTurnoutEl.textContent = `${turnout}%`;
+        const booths = Math.floor(Math.random() * 1201) + 800;
+        boothsReportedEl.textContent = booths.toLocaleString('en-IN');
+        const complaints = Math.floor(Math.random() * 101) + 50;
+        complaintsFiledEl.textContent = complaints;
+    };
+
     // --- AUTHENTICATION LOGIC ---
 
     const startOtpTimer = () => {
@@ -89,13 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         clearInterval(otpTimerInterval);
-        updateTimer(); // Initial call
+        updateTimer();
         otpTimerInterval = setInterval(updateTimer, 1000);
     };
 
     const handleLogin = (user) => {
         localStorage.setItem('ems-user', JSON.stringify(user));
-        authScreen.classList.remove('active');
         authScreen.style.display = 'none';
         mainApp.classList.add('active');
         userInfoHeader.classList.remove('hidden');
@@ -105,9 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
         bannerName.textContent = user.name;
         bannerRole.textContent = user.role;
         
-        // Load initial data for the app
         loadComplaints();
         loadResults();
+        updateDashboardStats(); // Update dashboard with dynamic numbers
         navigate('dashboard');
     };
 
@@ -120,8 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const originalText = sendOtpBtn.innerHTML;
         showSpinner(sendOtpBtn, 'Sending...');
 
-        setTimeout(() => { // Simulate API call
+        setTimeout(() => {
             hideSpinner(sendOtpBtn, originalText);
+            
+            // Generate random OTP and show in popup
+            generatedOtp = Math.floor(100000 + Math.random() * 900000);
+            alert(`Your Demo OTP is: ${generatedOtp}`);
+            
             phoneForm.classList.add('hidden');
             otpForm.classList.remove('hidden');
             verifyBtn.disabled = false;
@@ -137,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const role = userRoleSelect.value;
         const phone = `+91 ${phoneNumberInput.value}`;
 
-        if (otp !== '123456') {
+        if (otp !== generatedOtp.toString()) { // Check against random OTP
             showToast('Invalid OTP. Please try again.', true);
             return;
         }
@@ -149,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const originalText = verifyBtn.innerHTML;
         showSpinner(verifyBtn, 'Verifying...');
 
-        setTimeout(() => { // Simulate API call
+        setTimeout(() => {
             hideSpinner(verifyBtn, originalText);
             const user = { name, role, phone };
             handleLogin(user);
@@ -160,12 +185,15 @@ document.addEventListener('DOMContentLoaded', () => {
         phoneForm.classList.remove('hidden');
         otpForm.classList.add('hidden');
         clearInterval(otpTimerInterval);
-        otpTimerEl.textContent = `OTP valid for ${OTP_VALIDITY_SECONDS/60}:00`;
+        const minutes = Math.floor(OTP_VALIDITY_SECONDS / 60);
+        otpTimerEl.textContent = `OTP valid for ${minutes}:00`;
         otpForm.reset();
     };
 
     changeNumberBtn.addEventListener('click', resetAuth);
     resendOtpBtn.addEventListener('click', () => {
+        generatedOtp = Math.floor(100000 + Math.random() * 900000);
+        alert(`Your new Demo OTP is: ${generatedOtp}`);
         showToast('A new OTP has been sent.');
         verifyBtn.disabled = false;
         startOtpTimer();
@@ -190,7 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- DYNAMIC CONTENT RENDERING ---
-
     const loadComplaints = () => {
         if (MOCK_COMPLAINTS.length === 0) {
             complaintsList.innerHTML = `<p>You have not filed any complaints yet.</p>`;
@@ -200,9 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="complaint-item">
                 <div class="complaint-header">
                     <div class="complaint-id">${c.id}</div>
-                    <div class="status-badge ${c.status === 'Resolved' ? 'status-resolved' : 'status-pending'}">
-                        ${c.status}
-                    </div>
+                    <div class="status-badge ${c.status === 'Resolved' ? 'status-resolved' : 'status-pending'}">${c.status}</div>
                 </div>
                 <p><strong>Type:</strong> ${c.type}</p>
             </div>
@@ -222,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `).join('');
 
-        // Animate progress bars on view
         setTimeout(() => {
             document.querySelectorAll('.progress-fill').forEach(fill => {
                 fill.style.width = fill.dataset.width;
@@ -231,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- FORM SUBMISSIONS ---
-    
     reportForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const originalText = reportForm.querySelector('button').innerHTML;
@@ -247,8 +270,8 @@ document.addEventListener('DOMContentLoaded', () => {
             MOCK_COMPLAINTS.push(newComplaint);
             showToast('Report submitted successfully!');
             reportForm.reset();
-            loadComplaints(); // Update the track page
-            navigate('track'); // Switch to track page
+            loadComplaints();
+            navigate('track');
         }, 2000);
     });
 
@@ -276,9 +299,30 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     });
-
-    // --- APP INITIALIZATION ---
     
+    // --- PWA INSTALL PROMPT LOGIC ---
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        installPromptEl.classList.add('show');
+    });
+
+    installBtn.addEventListener('click', async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        }
+        deferredInstallPrompt = null;
+        installPromptEl.classList.remove('show');
+    });
+
+    dismissInstallBtn.addEventListener('click', () => {
+        installPromptEl.classList.remove('show');
+    });
+    
+    // --- APP INITIALIZATION ---
     const init = () => {
         const user = JSON.parse(localStorage.getItem('ems-user'));
         if (user) {
