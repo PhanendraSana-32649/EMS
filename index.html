@@ -24,8 +24,8 @@
     <div class="header-content">
       <div class="brand">
        <div class="logo">
-  <img src="WhatsApp_Image_2025-10-08_at_20.11.45_c322dc16-removebg-preview.png" alt="EMS Logo">
-</div>
+         <img src="images/logo.png" alt="EMS Logo">
+       </div>
         <div class="brand-text">
           <h1>Election Monitoring System(BETA v1.7)</h1>
           <p>Transparency • Trust • Truth</p>
@@ -62,7 +62,7 @@
         <div class="form-group">
           <label for="otp">🔐 Enter OTP</label>
           <input type="text" id="otp" placeholder="123456" maxlength="6" required pattern="\d{6}">
-          <small style="color: var(--green); display: block; margin-top: 0.5rem;"><strong>6 DIGIT OTP</strong></small>
+          <small id="otpHint" style="color: var(--green); display: block; margin-top: 0.5rem;"></small>
         </div>
         <div class="timer" id="otpTimer">OTP valid for 1:00</div>
 
@@ -178,7 +178,7 @@
         <div class="card">
             <h2>Live Election Results (Mock Data)</h2>
             <div id="resultsContainer">
-                </div>
+            </div>
         </div>
       </section>
       
@@ -201,7 +201,7 @@
         <div class="card">
           <h2>Track Your Complaints</h2>
           <div id="complaintsList">
-            </div>
+          </div>
         </div>
       </section>
     </div>
