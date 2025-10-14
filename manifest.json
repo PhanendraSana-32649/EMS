@@ -40,14 +40,14 @@
       "sizes": "720x1280",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Live Dashboard on Mobile"
+      "label": "EMS Login Page"
     },
     {
       "src": "WhatsApp Image 2025-10-14 at 17.29.47_aba3cbb1.jpg",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Election Results on Desktop"
+      "label": "EMS Login Page"
     }
   ],
   "shortcuts": [
