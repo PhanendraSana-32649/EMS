@@ -34,7 +34,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512x512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -42,14 +42,14 @@
   ],
   "screenshots": [
     {
-      "src": "screenshots/screenshot-mobile-1.png",
+      "src": "WhatsApp Image 2025-10-14 at 17.29.47_7a252d39.jpg",
       "sizes": "720x1280",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Live Dashboard on Mobile"
     },
     {
-      "src": "screenshots/screenshot-desktop-1.png",
+      "src": "WhatsApp Image 2025-10-14 at 17.29.47_aba3cbb1.jpg",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
