@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="theme-color" content="#FF9933">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <link rel="manifest" href="manifest.json">
+  
+  <title>EMS - Election Monitoring System</title>
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <link rel="icon" href="icons/icon-192x192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo">EMS</div>
+        <div class="brand-text">
+          <h1>Election Monitoring System</h1>
+          <p>Transparency • Trust • Truth</p>
+        </div>
+      </div>
+      <div class="user-info-header hidden" id="userInfoHeader">
+        <p id="headerName">Welcome!</p>
+        <p id="headerPhone">📱 +91 XXXXXXXXXX</p>
+      </div>
+    </div>
+  </header>
+
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-logo-circle">🔐</div>
+        <h2>Secure Login</h2>
+        <p>Authenticate with OTP</p>
+      </div>
+
+      <form id="phoneForm">
+        <div class="form-group">
+          <label for="phoneNumber">📱 Mobile Number</label>
+          <div class="phone-input">
+            <div class="phone-prefix">+91</div>
+            <input type="tel" id="phoneNumber" placeholder="9876543210" maxlength="10" required pattern="\d{10}">
+          </div>
+          <small style="color: var(--text-light); display: block; margin-top: 0.5rem;">Demo: Use any 10-digit number</small>
+        </div>
+        <button type="submit" id="sendOtpBtn">📨 Send OTP</button>
+      </form>
+
+      <form id="otpForm" class="hidden">
+        <div class="form-group">
+          <label for="otp">🔐 Enter OTP</label>
+          <input type="text" id="otp" placeholder="123456" maxlength="6" required pattern="\d{6}">
+          <small style="color: var(--green); display: block; margin-top: 0.5rem;">✅ Demo OTP: <strong>123456</strong></small>
+        </div>
+        <div class="timer" id="otpTimer">OTP valid for 5:00</div>
+
+        <div class="form-group">
+          <label for="userName">👤 Full Name</label>
+          <input type="text" id="userName" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="userRole">🎭 Your Role</label>
+          <select id="userRole" required>
+            <option value="Citizen/Voter">🙋 Citizen/Voter</option>
+            <option value="Observer">👁️ Observer</option>
+            <option value="Election Official">⚖️ Election Official</option>
+            <option value="Media">📰 Media</option>
+          </select>
+        </div>
+
+        <button type="submit" id="verifyBtn">✅ Verify & Login</button>
+        <button type="button" id="resendOtpBtn" class="btn-secondary">🔄 Resend OTP</button>
+        <button type="button" class="btn-outline" id="changeNumberBtn">◀️ Change Number</button>
+      </form>
+    </div>
+  </div>
+
+  <main id="mainApp" class="main-app">
+    <nav class="nav">
+      <div class="nav-inner">
+        <div class="nav-item active" data-page="dashboard">
+          <div class="nav-icon">📊</div>
+          <div>Dashboard</div>
+        </div>
+        <div class="nav-item" data-page="report">
+          <div class="nav-icon">📝</div>
+          <div>Report</div>
+        </div>
+        <div class="nav-item" data-page="results">
+          <div class="nav-icon">📈</div>
+          <div>Results</div>
+        </div>
+        <div class="nav-item" data-page="verify">
+          <div class="nav-icon">✓</div>
+          <div>Verify</div>
+        </div>
+        <div class="nav-item" data-page="track">
+          <div class="nav-icon">🔍</div>
+          <div>Track</div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content">
+      <section id="dashboard" class="active">
+        <div class="user-banner" id="userBanner">
+          <h3>Welcome, <span id="bannerName">User</span>!</h3>
+          <p>Role: <span id="bannerRole">Citizen/Voter</span></p>
+        </div>
+        <h2>Live Election Stats</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3 id="voterTurnout">71.4%</h3>
+            <p>Voter Turnout</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="boothsReported">1,250</h3>
+            <p>Booths Reported</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="complaintsFiled">89</h3>
+            <p>Complaints Filed</p>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Key Features</h2>
+          <ul class="feature-list">
+            <li class="feature-item">📝 Report incidents or complaints instantly.</li>
+            <li class="feature-item">🔍 Track the status of your reported complaints.</li>
+            <li class="feature-item">📈 View real-time (mock) election results.</li>
+            <li class="feature-item">✓ Verify your voter information (demo).</li>
+          </ul>
+        </div>
+        <button id="logoutBtn" class="btn-danger">Logout</button>
+      </section>
+
+      <section id="report">
+        <div class="card">
+          <h2>Report an Incident</h2>
+          <form id="reportForm">
+            <div class="form-group">
+              <label for="incidentType">Type of Incident</label>
+              <select id="incidentType" required>
+                <option value="">-- Select Type --</option>
+                <option value="EVM Malfunction">EVM Malfunction</option>
+                <option value="Booth Capturing">Booth Capturing</option>
+                <option value="Voter Intimidation">Voter Intimidation</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="boothNumber">Polling Booth Number</label>
+              <input type="text" id="boothNumber" placeholder="e.g., PS-123" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" placeholder="Describe the incident in detail..." required></textarea>
+            </div>
+            <button type="submit" id="submitReportBtn">Submit Report</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="card">
+            <h2>Live Election Results (Mock Data)</h2>
+            <div id="resultsContainer">
+                </div>
+        </div>
+      </section>
+      
+      <section id="verify">
+        <div class="card">
+            <h2>Verify Your Voter Information</h2>
+            <p>Enter your EPIC (Voter ID) number to verify your details.</p>
+            <form id="verifyForm">
+                <div class="form-group">
+                    <label for="epicNumber">EPIC Number</label>
+                    <input type="text" id="epicNumber" placeholder="e.g., ABC1234567" required>
+                </div>
+                <button type="submit">Verify</button>
+            </form>
+            <div id="verificationResult" class="hidden" style="margin-top: 1.5rem;"></div>
+        </div>
+      </section>
+
+      <section id="track">
+        <div class="card">
+          <h2>Track Your Complaints</h2>
+          <div id="complaintsList">
+            </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast">This is a toast message.</div>
+  
+  <div id="installPrompt" class="install-prompt">
+    <h3>Install EMS App</h3>
+    <p>Get a better experience by installing our app on your home screen.</p>
+    <div class="install-buttons">
+        <button id="installBtn">Install</button>
+        <button id="dismissInstallBtn" class="btn-outline">Later</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
