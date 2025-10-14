@@ -1,9 +1,9 @@
 {
   "name": "EMS - Election Monitoring System",
   "short_name": "EMS",
-  "id": "/?app=ems-pwa-v1",
-  "start_url": "/",
-  "scope": "/",
+  "id": "/EMS/",
+  "start_url": "/EMS/",
+  "scope": "/EMS/",
   "display": "standalone",
   "display_override": [
     "standalone"
@@ -21,49 +21,49 @@
     "social"
   ],
   "icons": [
-  {
-    "src": "icons/icon-192.png",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "any maskable"
-  },
-  {
-    "src": "icons/icon-512.png",
-    "sizes": "512x512",
-    "type": "image/png",
-    "purpose": "any maskable"
-  }
-]
-  "screenshots": [
     {
-      "src": "WhatsApp Image 2025-10-14 at 17.29.47_7a252d39.jpg",
-      "sizes": "720x1280",
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "EMS Login Page"
+      "purpose": "any maskable"
     },
     {
-      "src": "WhatsApp Image 2025-10-14 at 17.29.47_aba3cbb1.jpg",
-      "sizes": "1280x720",
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot-1.jpg",
+      "sizes": "720x1280",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Live Dashboard on Mobile"
+    },
+    {
+      "src": "screenshots/screenshot-2.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
       "form_factor": "wide",
-      "label": "EMS Login Page"
+      "label": "Election Results on Desktop"
     }
   ],
   "shortcuts": [
     {
       "name": "Report an Incident",
-      "url": "/#report",
+      "url": "/EMS/#report",
       "icons": [{ "src": "icons/report-shortcut.png", "sizes": "96x96" }]
     },
     {
       "name": "View Live Results",
-      "url": "/#results",
+      "url": "/EMS/#results",
       "icons": [{ "src": "icons/results-shortcut.png", "sizes": "96x96" }]
     }
   ],
   "share_target": {
-    "action": "/share-handler",
+    "action": "/EMS/share-handler",
     "params": {
       "title": "title",
       "text": "text",
