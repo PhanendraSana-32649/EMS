@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const seconds = timeLeft % 60;
             otpTimerEl.textContent = `OTP valid for ${minutes}:${seconds.toString().padStart(2, '0')}`;
             
-            if (timeLeft <= 60) otpTimerEl.classList.add('warning');
+            if (timeLeft <= 30) otpTimerEl.classList.add('warning');
             if (timeLeft <= 0) {
                 clearInterval(otpTimerInterval);
                 otpTimerEl.textContent = 'OTP Expired!';
