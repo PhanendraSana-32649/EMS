@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Server Overloaded – EMS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="icons/icon-192x192.png" type="image/png">
+
+  <style>
+    .error-wrapper {
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fff5e6, #e8f5e9);
+      text-align: center;
+    }
+
+    .error-card {
+      background: white;
+      padding: 2.5rem;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      border-top: 5px solid var(--saffron);
+      border-bottom: 5px solid var(--green);
+      animation: fadeIn 0.6s ease;
+    }
+
+    /* Circular Countdown */
+    .countdown-circle {
+      width: 140px;
+      height: 140px;
+      margin: 1rem auto;
+      position: relative;
+    }
+
+    .countdown-circle svg {
+      width: 140px;
+      height: 140px;
+      transform: rotate(-90deg);
+    }
+
+    .countdown-circle circle {
+      fill: none;
+      stroke-width: 12;
+      stroke-linecap: round;
+    }
+
+    .bg-ring {
+      stroke: #ddd;
+    }
+
+    .progress-ring {
+      stroke: var(--saffron);
+      stroke-dasharray: 440;
+      stroke-dashoffset: 440;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    .count-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .retry-btn {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-wrapper">
+    <div class="error-card">
+
+      <div class="error-icon">⚠️</div>
+
+      <h2>Server Overloaded</h2>
+      <p>
+        Our servers are receiving unusually high traffic.<br>
+        Please wait a moment while we stabilise things.
+      </p>
+
+      <!-- Animated Countdown -->
+      <div class="countdown-circle">
+        <svg>
+          <circle class="bg-ring" cx="70" cy="70" r="70"></circle>
+          <circle class="progress-ring" cx="70" cy="70" r="70"></circle>
+        </svg>
+        <div id="count" class="count-number">10</div>
+      </div>
+
+      <p>
+        Auto retrying in <span id="count-text">10</span> seconds…
+      </p>
+
+      <button onclick="manualRetry()" class="retry-btn">
+        🔄 Retry Now
+      </button>
+
+      <button class="btn-outline" onclick="window.location.href='index.html'">
+        ◀️ Go Home
+      </button>
+
+      <footer style="margin-top: 2rem; color: var(--text-light);">
+        EMS • Transparency • Trust • Truth
+      </footer>
+
+    </div>
+  </div>
+
+
+<script>
+  let timeLeft = 10;
+
+  const countText = document.getElementById("count-text");
+  const countNumber = document.getElementById("count");
+  const progressRing = document.querySelector(".progress-ring");
+
+  function updateCircle() {
+    const fullDash = 440;
+    const offset = fullDash - (fullDash * (timeLeft / 10));
+    progressRing.style.strokeDashoffset = offset;
+  }
+
+  const timer = setInterval(() => {
+    timeLeft--;
+
+    countText.innerText = timeLeft;
+    countNumber.innerText = timeLeft;
+
+    updateCircle();
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      location.reload();   // Auto retry
+    }
+
+  }, 1000);
+
+  function manualRetry() {
+    location.reload();
+  }
+
+  updateCircle();
+</script>
+
+</body>
+</html>
