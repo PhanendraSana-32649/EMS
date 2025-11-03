@@ -1,77 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Server Error</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EMS – Server Maintenance</title>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: #333;
+        }
 
-    body {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0a0f24;
-        color: white;
-        overflow: hidden;
-    }
+        .card {
+            background: #ffffff;
+            width: 90%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 1s ease-in-out;
+        }
 
-    .container {
-        text-align: center;
-        animation: fadeIn 1.5s ease-out;
-    }
+        h1 {
+            font-size: 26px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
 
-    .big-error {
-        font-size: 120px;
-        font-weight: 800;
-        letter-spacing: 5px;
-        animation: glitch 2.5s infinite;
-        color: #ff3b3b;
-        text-shadow: 0 0 20px rgba(255,0,0,0.5);
-    }
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
 
-    .msg {
-        font-size: 22px;
-        margin-top: 10px;
-        opacity: 0.9;
-    }
+        .loader {
+            margin: 25px auto;
+            border: 6px solid #e3e3e3;
+            border-top: 6px solid #007bff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
 
-    .sub {
-        margin-top: 15px;
-        font-size: 14px;
-        opacity: 0.5;
-    }
+        .count {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #555;
+        }
 
-    @keyframes glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(2px, -2px); }
-        60% { transform: translate(-1px, 1px); }
-        80% { transform: translate(1px, -1px); }
-        100% { transform: translate(0); }
-    }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-</style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="big-error">500</div>
-    <div class="msg">Server Overloaded</div>
-    <div class="sub">We will be right back soon...</div>
-</div>
+    <div class="card">
+        <h1>🔧 Server Under Maintenance</h1>
+
+        <p>
+            Our EMS servers are currently down due to a<br>
+            <b>database overload failure.</b><br><br>
+            Our engineering team is working hard to restore the system.
+        </p>
+
+        <div class="loader"></div>
+
+        <div class="count">Please wait... <span id="timer">15</span>s</div>
+    </div>
+
+    <script>
+        let time = 15;
+        setInterval(() => {
+            time--;
+            document.getElementById("timer").textContent = time;
+
+            if (time <= 0) {
+                time = 15; // restart animation
+            }
+        }, 1000);
+    </script>
 
 </body>
 </html>
