@@ -255,3 +255,11 @@ button:hover { transform: translateY(-3px) scale(1.02); }
   .auth-card { padding: 2rem 1.4rem; }
   .card { padding: 1.4rem; }
 }
+
+/* === FIXES ADDED === */
+#mainApp { display: none !important; }
+.main-app.active { display: block !important; }
+.auth-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
+.auth-card { width: 100%; max-width: 420px; margin: 0 auto; }
+.logo img { width: 64px; height: auto; object-fit: contain; display: block; }
+/* === END FIXES === */
